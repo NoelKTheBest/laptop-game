@@ -1,3 +1,22 @@
-[gd_scene format=3 uid="uid://b6hnip8tt5uf6"]
+[gd_scene load_steps=5 format=3 uid="uid://b6hnip8tt5uf6"]
+
+[ext_resource type="Script" path="res://node_2d.gd" id="1_bjhs1"]
+[ext_resource type="PackedScene" uid="uid://4odvglldso8j" path="res://Player.tscn" id="1_kkpix"]
+[ext_resource type="Script" path="res://spawner.gd" id="3_0mcdh"]
+[ext_resource type="PackedScene" uid="uid://cvvwjcuo2x58i" path="res://Enemy.tscn" id="3_ikg3l"]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_bjhs1")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_kkpix")]
+health = 1
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(2, 2)
+
+[node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("3_0mcdh")
+enemy_scene = ExtResource("3_ikg3l")
+spawn_area = Rect2(-500, -250, 1000, 500)
+
+[connection signal="player_died" from="CharacterBody2D" to="." method="_on_character_body_2d_player_died"]
